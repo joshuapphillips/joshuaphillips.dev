@@ -16,7 +16,7 @@ class ContactForm extends Component
     public string $email = '';
 
     #[Rule('required|numeric|digits_between:9,15')]
-    public string $telephone = '';G
+    public string $telephone = '';
 
     #[Rule('required|string|min:1|max:20')]
     public string $business = '';
