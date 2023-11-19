@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('communications', function (Blueprint $table) {
             $table->id();
             $table->json('content');
-            $table->boolean('notified');
+            $table->boolean('notified')->default(false);
             $table->timestamps();
         });
     }
