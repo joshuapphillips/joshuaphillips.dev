@@ -8,3 +8,5 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 }
+
+uses(TestCase::class)->in('Unit', 'Feature');
