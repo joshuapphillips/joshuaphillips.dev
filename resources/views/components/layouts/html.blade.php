@@ -7,7 +7,7 @@
     <title>{{ isset($title) ? "$title | " : "" }}{{ config('app.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
+<body {{ $attributes->merge(['class' => '']) }}>
     {{ $slot }}
 </body>
 </html>
