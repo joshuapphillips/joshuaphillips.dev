@@ -7,7 +7,10 @@
     <title>{{ isset($title) ? "$title | " : "" }}{{ config('app.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body {{ $attributes->merge(['class' => '']) }}>
+<body {{ $attributes }}>
+    @if($withBackground ?? true)
+        <x-layouts.background/>
+    @endif
     {{ $slot }}
 </body>
 </html>

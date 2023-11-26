@@ -10,6 +10,6 @@
     }
 @endphp
 
-<div {{ $attributes->merge(['class' => "px-5 m-auto w-screen $maxWidth"]) }}>
+<div {{ $attributes->merge(['class' => "px-5 $width:px-0 m-auto w-screen $maxWidth"]) }}>
     {{ $slot }}
 </div>
