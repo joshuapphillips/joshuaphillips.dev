@@ -4,7 +4,9 @@ namespace App\Livewire;
 
 use App\Models\Communication;
 use App\Rules\IsBritishTelephoneNumber;
+use Exception;
 use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Throwable;
@@ -27,42 +29,52 @@ class ContactForm extends Component
     public string $message = '';
 
     #[Rule(['required', 'accepted'])]
-    public string $termsAndConditions = '';
+    public ?bool $termsAndConditions = false;
 
+    // Honey Pot
     public string $username = '';
 
     public bool $processed = false;
 
     public ?string $error = null;
 
-    public function save()
+    public function save(): void
     {
+        $this->error = null;
+        $this->validate();
+
+        $name = ucwords($this->name);
+        $inputs = [
+            'name' => $name,
+            'company' => ucwords($this->company ?? ''),
+            'email' => $this->email,
+            'telephoneNumber' => str_replace(' ', '', $this->telephoneNumber),
+            'message' => $this->message,
+            'termsAndConditionsAccepted' => $this->termsAndConditions,
+        ];
+
         try {
-            $this->error = null;
-            $this->validate();
-
-            $content = [
-                'name' => $this->name,
-                'company' => $this->company,
-                'email' => $this->email,
-                'telephone_number' => $this->telephoneNumber,
-                'message' => $this->message,
-            ];
-
-            if (! empty($this->username)) {
-                Log::info('Spam form submission:'.json_encode($content));
+            throw new Exception('Oh No');
+            if (empty($this->username)) {
+                Communication::create([
+                    'name' => $name,
+                    'email_address' => $this->email,
+                    'content' => $inputs,
+                ]);
             } else {
-                Communication::create(['content' => $content]);
+                Log::info('Spam form submission', ['inputs' => $inputs]);
             }
 
+            $this->reset();
             $this->processed = true;
         } catch (Throwable $exception) {
-            Log::error("{$exception->getMessage()}");
+            Log::error("Contact form failed to save: {$exception->getMessage()}", ['inputs' => $inputs]);
+            $this->processed = false;
             $this->error = 'Something went wrong try again later.';
         }
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.contact-form');
     }

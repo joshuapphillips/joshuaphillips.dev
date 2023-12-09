@@ -10,8 +10,9 @@ class Communication extends Model
     use HasFactory;
 
     protected $fillable = [
+        'name',
+        'email_address',
         'content',
-        'notified',
     ];
 
     protected $casts = [
