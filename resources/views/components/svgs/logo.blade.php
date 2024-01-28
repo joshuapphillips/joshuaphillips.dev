@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 69.247 69.247" fill="{{ $fill ?? 'textcolor' }}">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 69.247 69.247" fill="{{ $fill ?? 'currentColor' }}">
     <g id="Group_68" data-name="Group 68" transform="translate(0 23.003)" opacity="0.997">
         <g id="Group_67" data-name="Group 67" transform="translate(0 -23.003)">
             <path id="Path_1" data-name="Path 1"

@@ -11,7 +11,7 @@
     <div class="mx-auto mt-8 space-y-5">
         <x-cards.feature title="Web Applications" icon="archive-box">
             <x-slot:icon>
-                <x-heroicon-o-arrow-left class="w-6 h-6 text-white"/>
+                <x-heroicon-o-globe-alt class="w-6 h-6"/>
             </x-slot:icon>
             I can seamlessly manage your web project from design and planning through the development process to completion. 
             Bringing your business ideas to life, by blending design and technology for a tailored solution. My experience 
@@ -19,7 +19,7 @@
         </x-cards.feature>
         <x-cards.feature title="Laravel" icon="archive-box">
             <x-slot:icon>
-                <x-heroicon-o-arrow-left class="w-6 h-6 text-white"/>
+               <x-svgs.laravel class="w-6 h-6" />
             </x-slot:icon>
             Utilise the capabilities of Laravel with my specialised skills. From conceptualisation to deployment, I focus on developing 
             elegant and scalable solutions that cater specifically to your business requirements. With a robust background in full-stack 
@@ -27,7 +27,7 @@
         </x-cards.feature>
         <x-cards.feature title="WordPress" icon="archive-box">
             <x-slot:icon>
-                <x-heroicon-o-arrow-left class="w-6 h-6 text-white"/>
+                <x-svgs.wordPress class="w-6 h-6" />
             </x-slot:icon>
             Benefit from my experience in WordPress website development. I focus on translating your ideas into visually appealing 
             and functional WordPress sites. This includes hands-on expertise in theme and plugin development for added 

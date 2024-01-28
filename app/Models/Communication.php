@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CommunicationTypes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,13 +11,12 @@ class Communication extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'email_address',
         'content',
     ];
 
     protected $casts = [
-        'content' => 'object',
+        'type' => CommunicationTypes::class,
+        'content' => 'array',
         'notified' => 'boolean',
     ];
 }

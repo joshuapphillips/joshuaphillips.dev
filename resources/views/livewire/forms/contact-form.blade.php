@@ -1,9 +1,8 @@
 <x-cards.card class="p-6 xl:px-10 shadow-xl">
-    @if($processed) 
+    @if($showSuccessMessage) 
         {{-- Success Message --}}
-        {{ 'welldone' }}
+        
     @else 
-
         @if($errors->any())
             {{ implode('', $errors->all('<div>:message</div>')) }}
         @endif
@@ -20,11 +19,11 @@
             <x-forms.input  wire="company" type="text" placeholder="Your company name"/>{{-- TODO: add required --}}
             <x-forms.input  wire="username" type="text" class="hidden" placeholder="Your username (required)"/>{{-- TODO: add required --}}
             <x-forms.textarea wire="message" placeholder="Let me know about your project (required)"/>{{-- TODO: add required --}}
-            <x-forms.terms-and-conditions wire="termsAndConditions"/>
-            @if($error)
+            <x-forms.privacy-policy wire="privacyPolicy"/>
+            @isset($formErrorMessage)
                 <x-alerts.warning :title="$error" />
-            @endif
-            <x-ui.button type="submit" class="w-full">Submit</x-ui>
+            @endisset
+            <x-button type="submit" class="w-full">Submit</x-ui>
         </form>
     @endif
 </x-cards.card>

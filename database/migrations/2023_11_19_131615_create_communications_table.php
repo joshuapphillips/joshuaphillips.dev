@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('communications', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email_address');
+            $table->string('type');
             $table->json('content');
             $table->boolean('notified')->default(false);
             $table->timestamps();
