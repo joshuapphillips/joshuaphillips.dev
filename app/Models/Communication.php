@@ -16,7 +16,7 @@ class Communication extends Model
 
     protected $casts = [
         'type' => CommunicationTypes::class,
-        'content' => 'array',
+        'content' => 'object',
         'notified' => 'boolean',
     ];
 }

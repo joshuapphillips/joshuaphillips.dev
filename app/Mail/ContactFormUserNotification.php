@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Communication;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -12,15 +13,15 @@ class ContactFormUserNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct()
-    {
-        //
+    public function __construct(
+        private Communication $communication
+    ) {
     }
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Contact Form User Notification',
+            subject: 'Thank You For Your Message!',
         );
     }
 

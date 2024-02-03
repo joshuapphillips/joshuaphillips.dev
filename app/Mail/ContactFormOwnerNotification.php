@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Communication;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -12,14 +13,15 @@ class ContactFormOwnerNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct()
-    {
-        //
+    public function __construct(
+        private Communication $communication
+    ) {
     }
 
     public function envelope(): Envelope
     {
         return new Envelope(
+            to: config('contact.email_address'),
             subject: 'Contact Form Owner Notification',
         );
     }

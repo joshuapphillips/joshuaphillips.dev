@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events\Forms;
+namespace App\Events;
 
 use App\Models\Communication;
 use Illuminate\Broadcasting\InteractsWithSockets;
