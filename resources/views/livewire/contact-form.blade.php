@@ -9,15 +9,12 @@
                 a project in mind, I'm here to assist you.
             </p>
 
-            <x-forms.input placeholder="Your name (required)" type="text" wire="name" /> {{-- TODO: ADD REQUIRED --}}
-            <x-forms.input placeholder="Your email address (required)" type="email" wire="email" />
-            {{-- TODO: ADD REQUIRED --}}
-            <x-forms.input placeholder="Your telephone number" type="tel" wire="telephoneNumber" />
-            {{-- TODO: ADD REQUIRED --}}
-            <x-forms.input placeholder="Your company name" type="text" wire="company" /> {{-- TODO: ADD REQUIRED --}}
+            <x-forms.input placeholder="Your name (required)" required type="text" wire="name" />
+            <x-forms.input placeholder="Your email address (required)" required type="email" wire="email" />
+            <x-forms.input placeholder="Your telephone number" required type="tel" wire="telephoneNumber" />
+            <x-forms.input placeholder="Your company name" required type="text" wire="company" />
             <x-forms.input class="hidden" placeholder="Your username (required)" type="text" wire="username" />
-            <x-forms.textarea placeholder="Let me know about your project (required)" wire="message" />
-            {{-- TODO: ADD REQUIRED --}}
+            <x-forms.textarea placeholder="Let me know about your project (required)" required wire="message" />
             <x-forms.privacy-policy wire="privacyPolicy" />
 
             @isset($formErrorMessage)
@@ -25,8 +22,8 @@
             @endisset
 
             <x-button class="w-full" type="submit">
-                <span wire:loading.remove>Submit</span>
-                <span wire:loading.delay.short wire:loading.short>Submitting...</span>
+                <span wire:loading.remove.delay>Submit</span>
+                <span wire:loading.delay>Submitting...</span>
             </x-button>
         </form>
     @else

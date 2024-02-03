@@ -41,6 +41,7 @@ class ContactForm extends Component
 
     public function save(): void
     {
+        sleep(5); // Simulate network latency
         $this->formErrorMessage = null;
         $this->validate();
 

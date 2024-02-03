@@ -11,6 +11,7 @@ class Communication extends Model
     use HasFactory;
 
     protected $fillable = [
+        'type',
         'content',
     ];
 

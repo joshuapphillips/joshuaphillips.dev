@@ -19,8 +19,8 @@ class ContactFormOwnerNotification implements ShouldQueue
             $communication = $event->communication;
 
             throw_unless(
-                $communication->type === CommunicationTypes::GENERAL_CONTACT,
-                new Exception('Communication type is not '.CommunicationTypes::GENERAL_CONTACT)
+                $communication->type->value === CommunicationTypes::GENERAL_CONTACT->value,
+                new Exception('Communication type is not '.CommunicationTypes::GENERAL_CONTACT->value)
             );
 
             Mail::send(new Email($communication));

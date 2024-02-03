@@ -21,8 +21,8 @@ class ContactFormUserNotification implements ShouldQueue
     {
         try {
             throw_unless(
-                $event->communication->type === CommunicationTypes::GENERAL_CONTACT,
-                new Exception('Communication type is not '.CommunicationTypes::GENERAL_CONTACT)
+                $communication->type->value === CommunicationTypes::GENERAL_CONTACT->value,
+                new Exception('Communication type is not '.CommunicationTypes::GENERAL_CONTACT->value)
             );
 
             $email = $event->communication->content?->email;
