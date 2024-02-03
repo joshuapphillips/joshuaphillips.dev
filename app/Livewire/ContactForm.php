@@ -7,7 +7,6 @@ use App\Events\ContactFormSubmitted;
 use App\Models\Communication;
 use App\Rules\IsBritishTelephoneNumber;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Sleep;
 use Illuminate\View\View;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
@@ -42,7 +41,6 @@ class ContactForm extends Component
 
     public function save(): void
     {
-        Sleep::sleep(2);
         $this->formErrorMessage = null;
         $this->validate();
 
