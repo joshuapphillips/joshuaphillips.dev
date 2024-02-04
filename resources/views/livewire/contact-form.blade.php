@@ -1,5 +1,5 @@
 <x-cards.card class="p-6 shadow-xl xl:px-10">
-    @unless ($showSuccessMessage)
+    @unless ($successful)
         <form class="space-y-3" wire:submit="save">
             <h3 class="text-2xl font-bold">Contact Me</h3>
             <p class="text-sm text-gray-500 2xl:text-base">
@@ -13,12 +13,12 @@
             <x-forms.input placeholder="Your email address (required)" required type="email" wire="email" />
             <x-forms.input placeholder="Your telephone number" required type="tel" wire="telephoneNumber" />
             <x-forms.input placeholder="Your company name" required type="text" wire="company" />
-            <x-forms.input class="hidden" placeholder="Your username (required)" type="text" wire="username" />
             <x-forms.textarea placeholder="Let me know about your project (required)" required wire="message" />
             <x-forms.privacy-policy wire="privacyPolicy" />
+            <x-honeypot livewire-model="extraFields" />
 
-            @isset($formErrorMessage)
-                <x-alerts.warning :title="$formErrorMessage" />
+            @isset($errorMessage)
+                <x-alerts.warning :title="$errorMessage" />
             @endisset
 
             <x-button class="w-full" type="submit">

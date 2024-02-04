@@ -2,18 +2,19 @@
 
 namespace App\Livewire;
 
-use App\Enums\CommunicationTypes;
-use App\Events\ContactFormSubmitted;
-use App\Models\Communication;
 use App\Rules\IsBritishTelephoneNumber;
-use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
-use Throwable;
+use Spatie\Honeypot\Http\Livewire\Concerns\HoneypotData;
+use Spatie\Honeypot\Http\Livewire\Concerns\UsesSpamProtection;
 
 class ContactForm extends Component
 {
+    use UsesSpamProtection;
+
+    const DEFAULT_ERROR_MESSAGE = 'Something went wrong try again later.';
+
     #[Rule(['required', 'string', 'min:2', 'max:20'])]
     public string $name = '';
 
@@ -32,47 +33,35 @@ class ContactForm extends Component
     #[Rule(['required', 'accepted'])]
     public ?bool $privacyPolicy = false;
 
-    // Honey Pot
-    public string $username = '';
+    public HoneypotData $extraFields;
 
-    public bool $showSuccessMessage = false;
+    public bool $successful = false;
 
-    public ?string $formErrorMessage = null;
+    public ?string $errorMessage = null;
 
-    public function save(): void
+    public function mount()
     {
-        sleep(5); // Simulate network latency
-        $this->formErrorMessage = null;
+        $this->extraFields = new HoneypotData();
+    }
+
+    public function save(): bool
+    {
+        $this->protectAgainstSpam();
+
+        $this->errorMessage = null;
         $this->validate();
 
         try {
-            $inputs = [
-                'name' => $this->name,
-                'company' => $this->company,
-                'email' => $this->email,
-                'telephone_number' => $this->telephoneNumber,
-                'message' => $this->message,
-                'privacy_policy' => $this->privacyPolicy,
-            ];
-
-            // If Honey Pot empty
-            if (empty($this->username)) {
-                $communication = Communication::create([
-                    'type' => CommunicationTypes::GENERAL_CONTACT,
-                    'content' => $inputs,
-                ]);
-                ContactFormSubmitted::dispatch($communication);
-            } else {
-                Log::info('Spam form submission', ['inputs' => $inputs]);
-            }
-
-            $this->reset();
-            $this->showSuccessMessage = true;
-        } catch (Throwable $exception) {
-            Log::error("Contact form failed to save: {$exception->getMessage()}", ['inputs' => $inputs]);
-
-            // Display form error message
-            $this->formErrorMessage = 'Something went wrong try again later.';
+            $communication = Communication::create([
+                'type' => CommunicationTypes::GENERAL_CONTACT->value,
+                'content' => $this->only(['name', 'company', 'email', 'telephoneNumber', 'message', 'privacyPolicy']),
+            ]);
+            ContactFormSubmitted::dispatch($communication);
+            $this->successful = true;
+        } catch (Exception $exception) {
+            Log::error("Contact form failed to save: {$exception->getMessage()}", ['inputs' => $this->all()]);
+            $this->errorMessage = self::DEFAULT_ERROR_MESSAGE;
+            $this->successful = false;
         }
     }
 
